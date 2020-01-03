@@ -6,8 +6,9 @@
 import time
 from elasticsearch import Elasticsearch
 from elasticsearch.helpers import scan
+from secret import es_auth
 
-es = Elasticsearch(hosts=['http://atlas-kibana.mwt2.org:9200'], http_auth=('xxxx', 'xxx'))
+es = Elasticsearch(hosts=['http://atlas-kibana.mwt2.org:9200'], http_auth=es_auth)
 print(es.ping())
 
 
