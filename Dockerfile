@@ -50,27 +50,28 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 
 RUN pip3 install --upgrade pip
 
-
 RUN pip3 --no-cache-dir install \
     requests \
+    elasticsearch \
     h5py \
-    tables \
     matplotlib \
     numpy \
-    pandas \
+    pandas 
+
+RUN pip3 --no-cache-dir install \
+    tables \
     scipy \
     sklearn \
+    keras
+
+RUN pip3 --no-cache-dir install \
     tqdm \
-    seaborn \
-    keras \
-    elasticsearch \
     tensorflow-gpu \
     gym \
-    baselines \
-    pydot \
-    JSAnimation
+    baselines 
 
 COPY environment.sh /.environment.sh
+COPY *.py /.
 
 # build info
 RUN echo "Timestamp:" `date --utc` | tee /image-build-info.txt
