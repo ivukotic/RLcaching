@@ -3,7 +3,7 @@
 
 #!bin/python
 
-import time
+from time import time
 from elasticsearch import Elasticsearch
 from elasticsearch.helpers import scan
 from secret import es_auth
@@ -11,15 +11,16 @@ from secret import es_auth
 es = Elasticsearch(hosts=['http://atlas-kibana.mwt2.org:9200'], http_auth=es_auth)
 print(es.ping())
 
-
+dt = 30 * 24 * 86400
 query = {
     "size": 0,
-    "_source": ["scope", "dataset", "filename", "timeStart", "filesize", "pq"],
+    "_source": ["scope", "dataset", "filename", "timeStart", "filesize"],
     "query": {
         "bool": {
             "must": [
-                {"term": {"event_type": "get_sm_a"}},
-                {"term": {"pq": "ANALY_MWT2_UCORE"}}
+                {"term": {"eventType": "get_sm_a"}},
+                {"term": {"pq": "ANALY_MWT2_UCORE"}},
+                {"range": {"timeStart": {"gt": time() - dt, "format": "epoch_second"}}}
             ]
         }
     }
