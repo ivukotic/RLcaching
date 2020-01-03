@@ -42,6 +42,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
     unzip \
     zip \
     vim \
+    libopenmpi-dev \
     bazel \
     && \
     apt-get clean && \
