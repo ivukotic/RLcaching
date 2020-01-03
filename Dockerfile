@@ -72,7 +72,7 @@ RUN pip3 --no-cache-dir install \
     baselines 
 
 COPY environment.sh /.environment.sh
-COPY *.py /.
+COPY *.py /
 
 # build info
 RUN echo "Timestamp:" `date --utc` | tee /image-build-info.txt
