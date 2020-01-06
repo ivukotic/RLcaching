@@ -1,0 +1,3 @@
+Code that creates sparse array from scope, dataset, and filename. For start maybe only scope? 
+Array should be sorted in time and rewards calculated (0 if cached and -fs[MB] if not)
+Create environment that reads that sparse array and dolls file representation (space), get actions (cache/don't cache), returns rewards.

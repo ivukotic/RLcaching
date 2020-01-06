@@ -1,6 +1,7 @@
 import random
 import gym
 import numpy as np
+import pandas as pd
 from collections import deque
 from keras.models import Sequential
 from keras.layers import Dense
@@ -11,6 +12,11 @@ import tensorflow as tf
 
 
 EPISODES = 5000
+
+
+def load_data(pq='ANALY_MWT2_UCORE'):
+    accesses = pd.read_hdf('data/' + pq + '.h5', key='data', mode='r')
+    return accesses
 
 
 class DQNAgent:

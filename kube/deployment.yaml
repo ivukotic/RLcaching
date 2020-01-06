@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rl-caching
+  namespace: slate-group-atlas-xcache 
+  labels:
+    app: rl-caching
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rl-caching
+    
+  template:
+    metadata:
+      labels:
+        app: rl-caching
+    spec:
+
+      containers:
+        - name: rl-caching
+          image: "ivukotic/rl-caching:latest"
+          imagePullPolicy: Always
+
