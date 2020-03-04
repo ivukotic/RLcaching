@@ -13,12 +13,6 @@ import tensorflow as tf
 
 EPISODES = 5000
 
-
-def load_data(pq='ANALY_MWT2_UCORE'):
-    accesses = pd.read_hdf('data/' + pq + '.h5', key='data', mode='r')
-    return accesses
-
-
 class DQNAgent:
     def __init__(self, state_size, action_size):
         self.state_size = state_size

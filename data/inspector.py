@@ -39,10 +39,10 @@ def indexTokens(toks):
 
 
 AT = []
-for i in range(10):
-    # for i in range(data.shape[0]):
+# for i in range(10):
+for i in range(data.shape[0]):
     dser = data.iloc[i, :]
-    print(dser)
+    # print(dser)
     sc = dser.scope
     ds = dser.dataset.replace(':', '.').split('.')
     fn = dser.filename.replace(':', '.').split('.')
@@ -52,7 +52,7 @@ for i in range(10):
     # print(ds)
     # print(fn)
 
-    print("---------------------------")
+    # print("---------------------------")
     if sc in ds:
         ds.remove(sc)
     # if sc in fn:
@@ -68,19 +68,21 @@ for i in range(10):
         # else:
         # AT[t] = 1
     tokens = cleanTokens(sc, ds)
-    print(sc)
-    print(ds)
-    print(fn)
-    print(tokens)
+    # print(sc)
+    # print(ds)
+    # print(fn)
+    # print(tokens)
     tIs = indexTokens(tokens[0:6])
-    print(tIs)
+    # print(tIs)
     tIs.append(ts)
     tIs.append(fs)
     AT.append(tIs)
-    print("===========================")
+    # print("===========================")
 
-print(AT)
+# print(AT)
 all_tokens = pd.DataFrame(AT)
 all_tokens.columns = ['1', '2', '3', '4', '5', '6', 'time', 'MB']
 all_tokens.sort_values(by='time', axis='index', inplace=True, ascending=True)
 print(all_tokens.head(15))
+
+all_tokens.to_hdf(pq + '_ready.h5', key='data', mode='w', complevel=1)
