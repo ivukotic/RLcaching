@@ -13,6 +13,7 @@ import tensorflow as tf
 
 EPISODES = 5000
 
+
 class DQNAgent:
     def __init__(self, state_size, action_size):
         self.state_size = state_size
@@ -87,11 +88,11 @@ class DQNAgent:
 
 
 if __name__ == "__main__":
-    env = gym.make('CartPole-v1')
+    env = gym.make('gym_cache:Cache-v0')
     state_size = env.observation_space.shape[0]
     action_size = env.action_space.n
     agent = DQNAgent(state_size, action_size)
-    # agent.load("./save/cartpole-ddqn.h5")
+    # agent.load("./save/cache-ddqn.h5")
     done = False
     batch_size = 32
 
