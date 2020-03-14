@@ -11,9 +11,6 @@ from keras import backend as K
 import tensorflow as tf
 
 
-EPISODES = 5000
-
-
 class DQNAgent:
     def __init__(self, state_size, action_size):
         self.state_size = state_size
@@ -87,37 +84,36 @@ class DQNAgent:
         self.model.save_weights(name)
 
 
-if __name__ == "__main__":
-    env = gym.make('gym_cache:Cache-v0')
-    state_size = env.observation_space.shape[0]
-    action_size = env.action_space.n
-    agent = DQNAgent(state_size, action_size)
-    # agent.load("./save/cache-ddqn.h5")
-    done = False
-    batch_size = 32
+env = gym.make('gym_cache:Cache-v0')
+state_size = env.observation_space.shape[0]
+action_size = env.action_space.n
+agent = DQNAgent(state_size, action_size)
+# agent.load("./save/cache-ddqn.h5")
 
-    for e in range(EPISODES):
-        state = env.reset()
-        state = np.reshape(state, [1, state_size])
-        for time in range(500):
-            # env.render()
-            action = agent.act(state)
-            next_state, reward, done, _ = env.step(action)
-            #reward = reward if not done else -10
-            x, x_dot, theta, theta_dot = next_state
-            r1 = (env.x_threshold - abs(x)) / env.x_threshold - 0.8
-            r2 = (env.theta_threshold_radians - abs(theta)) / env.theta_threshold_radians - 0.5
-            reward = r1 + r2
+EPISODES = 5
+batch_size = 10000
+accesses = 100000
+# accesses = 3090162
 
-            next_state = np.reshape(next_state, [1, state_size])
-            agent.memorize(state, action, reward, next_state, done)
-            state = next_state
-            if done:
-                agent.update_target_model()
-                print("episode: {}/{}, score: {}, e: {:.2}"
-                      .format(e, EPISODES, time, agent.epsilon))
-                break
-            if len(agent.memory) > batch_size:
-                agent.replay(batch_size)
-        # if e % 10 == 0:
-        #     agent.save("./save/cartpole-ddqn.h5")
+for e in range(EPISODES):
+    state = env.reset()
+    state = np.reshape(state, [1, state_size])
+    for time in range(accesses):
+        if not time % 10000:
+            print('access:', time)
+        # env.render()
+
+        action = agent.act(state)
+        next_state, reward, done, _ = env.step(action)
+
+        next_state = np.reshape(next_state, [1, state_size])
+        agent.memorize(state, action, reward, next_state, done)
+        state = next_state
+        if done:
+            agent.update_target_model()
+            print("episode: {}/{}, score: {}, e: {:.2}".format(e, EPISODES, time, agent.epsilon))
+            break
+        if len(agent.memory) > batch_size:
+            agent.replay(batch_size)
+    # if e % 10 == 0:
+    #     agent.save("./save/cartpole-ddqn.h5")
