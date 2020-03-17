@@ -2,6 +2,7 @@ import random
 import gym
 import numpy as np
 import pandas as pd
+# import matplotlib.pyplot as plt
 from collections import deque
 from keras.models import Sequential
 from keras.layers import Dense
@@ -89,31 +90,50 @@ state_size = env.observation_space.shape[0]
 action_size = env.action_space.n
 agent = DQNAgent(state_size, action_size)
 # agent.load("./save/cache-ddqn.h5")
-
-EPISODES = 5
-batch_size = 10000
-accesses = 100000
+EPISODES = 1
+batch_size = 64
+accesses = 20000
 # accesses = 3090162
 
+
+name = "E{}_b{}_acc{}".format(EPISODES, batch_size, accesses)
+epi_rew = []
+inepi_rew = []
+
 for e in range(EPISODES):
+
+    epi_rew.append(0)
+    inepi_rew.append([])
+    sum_rew = 0
+
     state = env.reset()
     state = np.reshape(state, [1, state_size])
     for time in range(accesses):
-        if not time % 10000:
-            print('access:', time)
         # env.render()
 
         action = agent.act(state)
         next_state, reward, done, _ = env.step(action)
+        sum_rew += reward
+        epi_rew[e] += reward
 
         next_state = np.reshape(next_state, [1, state_size])
         agent.memorize(state, action, reward, next_state, done)
         state = next_state
-        if done:
+
+        if not time % 1000:
             agent.update_target_model()
-            print("episode: {}/{}, score: {}, e: {:.2}".format(e, EPISODES, time, agent.epsilon))
-            break
+            print("episode: {}/{}, access: {}, score: {}, e: {:.2}".format(e, EPISODES, time, sum_rew, agent.epsilon))
+            inepi_rew[e].append(sum_rew)
+            sum_rew = 0
         if len(agent.memory) > batch_size:
             agent.replay(batch_size)
-    # if e % 10 == 0:
-    #     agent.save("./save/cartpole-ddqn.h5")
+
+#     if e % 10 == 0:
+    agent.save("./save/cache-ddqn_" + name + ".h5")
+
+print(epi_rew)
+
+r1 = pd.DataFrame.from_dict(inepi_rew[0])
+ax = r1.plot()
+ax.grid(True)
+ax.figure.savefig('plots/' + name + '.png')
