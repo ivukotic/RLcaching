@@ -2,7 +2,6 @@ import random
 import gym
 import numpy as np
 import pandas as pd
-# import matplotlib.pyplot as plt
 from collections import deque
 from keras.models import Sequential
 from keras.layers import Dense
@@ -91,14 +90,18 @@ action_size = env.action_space.n
 agent = DQNAgent(state_size, action_size)
 # agent.load("./save/cache-ddqn.h5")
 EPISODES = 1
-batch_size = 64
+replay_batch_size = 64
+updata_steps = 128
+
 accesses = 20000
+accesses = 1000000
 # accesses = 3090162
 
 
-name = "E{}_b{}_acc{}".format(EPISODES, batch_size, accesses)
+name = "E{}_b{}_acc{}".format(EPISODES, replay_batch_size, accesses)
 epi_rew = []
 inepi_rew = []
+in_act = [0, 0]
 
 for e in range(EPISODES):
 
@@ -115,25 +118,31 @@ for e in range(EPISODES):
         next_state, reward, done, _ = env.step(action)
         sum_rew += reward
         epi_rew[e] += reward
+        in_act[action] += 1
 
         next_state = np.reshape(next_state, [1, state_size])
         agent.memorize(state, action, reward, next_state, done)
         state = next_state
 
-        if not time % 1000:
+        if not time % updata_steps:
             agent.update_target_model()
-            print("episode: {}/{}, access: {}, score: {}, e: {:.2}".format(e, EPISODES, time, sum_rew, agent.epsilon))
+            print("episode: {}/{}, access: {}, score: {}, e: {:.2}, actions: {}".format(e, EPISODES, time, sum_rew, agent.epsilon, in_act))
             inepi_rew[e].append(sum_rew)
             sum_rew = 0
-        if len(agent.memory) > batch_size:
-            agent.replay(batch_size)
+            in_act = [0, 0]
+
+            if len(agent.memory) > replay_batch_size:
+                agent.replay(replay_batch_size)
 
 #     if e % 10 == 0:
     agent.save("./save/cache-ddqn_" + name + ".h5")
 
+
 print(epi_rew)
 
-r1 = pd.DataFrame.from_dict(inepi_rew[0])
-ax = r1.plot()
-ax.grid(True)
-ax.figure.savefig('plots/' + name + '.png')
+env.close()
+
+# r1 = pd.DataFrame.from_dict(inepi_rew[0])
+# ax = r1.plot()
+# ax.grid(True)
+# ax.figure.savefig('results/' + name + '.png')

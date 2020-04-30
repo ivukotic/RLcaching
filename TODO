@@ -1,7 +1,11 @@
-DDQN actor solves discrete cache env
+### DDQN 
+Actor solves discrete cache env
 * currently always returns 0
 * no need to memorize next_state and done
 
-AC solves continuous caceh env
+### AC 
+Solves continuous cache env
 
-LRU actor. Simply caches everything, when asked for cleanup always responds with "clean". Important part to look at is not reward but a cache hit rate given by the environtment.
+### LRU actor
+Simply caches everything, when asked for cleanup always responds with "clean". 
+Important part to look at is not reward but a cache hit rate given by the environment.

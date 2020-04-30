@@ -2,12 +2,6 @@
 Testing caching reinforcement learning agents
 
 ## Extracting file access data
-This is a two step procedure:
-* extract raw data
-    extract_data.py - change PQ, date range
-* process raw data
-    process_data.py - tokenizes filenames, generates unique fileIDs, sorts by access time.
-processed data should be copied to the directory where actor runs.
 
 
 Environment gives tokenized filename, filesize. It always caches the file. 
