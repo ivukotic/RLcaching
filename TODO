@@ -1,3 +1,13 @@
+To remember:
+1. RESET returns initial observation
+2. ACTOR decides what to do
+3. action is sent and reward obtained together with the n+1 observation=> observation, reward, done, info = env.step(action)
+
+ENVIRONMENT memorizes last decision concerning file and cleans based on that. For discreete decisions removes older files first.
+
+### LRU actor
+
+
 ### DDQN 
 Actor solves discrete cache env
 * currently always returns 0
@@ -5,7 +15,3 @@ Actor solves discrete cache env
 
 ### AC 
 Solves continuous cache env
-
-### LRU actor
-Simply caches everything, when asked for cleanup always responds with "clean". 
-Important part to look at is not reward but a cache hit rate given by the environment.
