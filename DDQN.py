@@ -85,7 +85,7 @@ class DQNAgent:
         self.model.save(name)
 
 
-env = gym.make('gym-cache:Cache-v0')
+env = gym.make('gym_cache:Cache-v0')
 env.set_actor_name('DDQN')
 
 state_size = env.observation_space.shape[0]

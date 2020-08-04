@@ -66,7 +66,7 @@ RUN pip3 --no-cache-dir install \
     tensorflow \
     gym \
     baselines \
-    gym-cache
+    gym_cache
 
 COPY environment.sh /.environment.sh
 COPY *.py /
@@ -75,4 +75,5 @@ COPY *.py /
 RUN echo "Timestamp:" `date --utc` | tee /image-build-info.txt
 
 
-CMD ["/.environment.sh"]
+# CMD ["/.environment.sh"]
+CMD ["/bin/bash"]

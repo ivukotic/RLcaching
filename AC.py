@@ -181,7 +181,7 @@ def main():
     sess = tf.Session()
     K.set_session(sess)
     # env = gym.make("Pendulum-v0")
-    env = gym.make('gym-cache:Cache-continuous-v0')
+    env = gym.make('gym_cache:Cache-continuous-v0')
     actor_critic = ActorCritic(env, sess)
 
     num_trials = 1000
