@@ -35,7 +35,8 @@ class DQNAgent:
         cond = K.abs(error) <= clip_delta
 
         squared_loss = 0.5 * K.square(error)
-        quadratic_loss = 0.5 * K.square(clip_delta) + clip_delta * (K.abs(error) - clip_delta)
+        quadratic_loss = 0.5 * \
+            K.square(clip_delta) + clip_delta * (K.abs(error) - clip_delta)
 
         return K.mean(tf.where(cond, squared_loss, quadratic_loss))
 
@@ -78,13 +79,15 @@ class DQNAgent:
             self.epsilon *= self.epsilon_decay
 
     def load(self, name):
-        self.model.load_weights(name)
+        self.model.load_model(name)
 
     def save(self, name):
-        self.model.save_weights(name)
+        self.model.save(name)
 
 
-env = gym.make('gym_cache:Cache-v0')
+env = gym.make('gym-cache:Cache-v0')
+env.set_actor_name('DDQN')
+
 state_size = env.observation_space.shape[0]
 action_size = env.action_space.n
 agent = DQNAgent(state_size, action_size)
@@ -126,7 +129,8 @@ for e in range(EPISODES):
 
         if not time % updata_steps:
             agent.update_target_model()
-            print("episode: {}/{}, access: {}, score: {}, e: {:.2}, actions: {}".format(e, EPISODES, time, sum_rew, agent.epsilon, in_act))
+            print("episode: {}/{}, access: {}, score: {}, e: {:.2}, actions: {}".format(e,
+                                                                                        EPISODES, time, sum_rew, agent.epsilon, in_act))
             inepi_rew[e].append(sum_rew)
             sum_rew = 0
             in_act = [0, 0]
@@ -135,7 +139,7 @@ for e in range(EPISODES):
                 agent.replay(replay_batch_size)
 
 #     if e % 10 == 0:
-    agent.save("./save/cache-ddqn_" + name + ".h5")
+    agent.save("./save/cache-ddqn_" + name)
 
 
 print(epi_rew)

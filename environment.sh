@@ -5,3 +5,4 @@ export PATH
 echo "========= all set up. ============"
 ls
 "$@"
+sleep 1000000

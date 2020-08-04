@@ -16,7 +16,9 @@ class LRUAgent:
         # return np.argmax(act_values[0])
 
 
-env = gym.make('gym_cache:Cache-v0')
+env = gym.make('gym-cache:Cache-v0')
+env.set_actor_name('LRU')
+
 state_size = env.observation_space.shape[0]
 action_size = env.action_space.n
 agent = LRUAgent()

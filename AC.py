@@ -51,7 +51,8 @@ class ActorCritic:
         self.actor_grads = tf.gradients(self.actor_model.output,
                                         actor_model_weights, -self.actor_critic_grad)  # dC/dA (from actor)
         grads = zip(self.actor_grads, actor_model_weights)
-        self.optimize = tf.train.AdamOptimizer(self.learning_rate).apply_gradients(grads)
+        self.optimize = tf.train.AdamOptimizer(
+            self.learning_rate).apply_gradients(grads)
 
         # ===================================================================== #
         #                              Critic Model                             #
@@ -180,7 +181,7 @@ def main():
     sess = tf.Session()
     K.set_session(sess)
     # env = gym.make("Pendulum-v0")
-    env = gym.make('gym_cache:Cache-continuous-v0')
+    env = gym.make('gym-cache:Cache-continuous-v0')
     actor_critic = ActorCritic(env, sess)
 
     num_trials = 1000

@@ -5,6 +5,10 @@ To remember:
 
 ENVIRONMENT memorizes last decision concerning file and cleans based on that. For discreete decisions removes older files first.
 
+### ENV
+* Why peak at 0 in CHR?
+* check what large environment does
+
 ### LRU actor
 
 

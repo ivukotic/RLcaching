@@ -57,19 +57,16 @@ RUN pip3 --no-cache-dir install \
     h5py \
     matplotlib \
     numpy \
-    pandas 
-
-RUN pip3 --no-cache-dir install \
+    pandas \
     tables \
     scipy \
     sklearn \
-    keras
-
-RUN pip3 --no-cache-dir install \
+    keras \
     tqdm \
-    tensorflow-gpu \
+    tensorflow \
     gym \
-    baselines 
+    baselines \
+    gym-cache
 
 COPY environment.sh /.environment.sh
 COPY *.py /
