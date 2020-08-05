@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: rl-caching
-  namespace: slate-group-atlas-xcache 
+  namespace: ml-usatlas-org
   labels:
     app: rl-caching
 spec:
@@ -10,15 +10,22 @@ spec:
   selector:
     matchLabels:
       app: rl-caching
-    
+
   template:
     metadata:
       labels:
         app: rl-caching
     spec:
-
       containers:
         - name: rl-caching
           image: "ivukotic/rl-caching:latest"
           imagePullPolicy: Always
-
+          resources:
+            requests:
+              cpu: "1"
+              memory: "8Gi"
+              nvidia.com/gpu: "1"
+            limits:
+              cpu: "1"
+              memory: "8Gi"
+              nvidia.com/gpu: "1"
