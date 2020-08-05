@@ -62,4 +62,4 @@ ax = r1.plot(title='Average reward per {} accesses'.format(bsize))
 ax.grid(True)
 
 name = "LRU_reward_acc_{}".format(time)
-ax.figure.savefig('plots/' + name + '.png')
+ax.figure.savefig('/results/plots/' + name + '.png')

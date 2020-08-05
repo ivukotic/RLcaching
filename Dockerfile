@@ -55,25 +55,32 @@ RUN pip3 --no-cache-dir install \
     requests \
     elasticsearch \
     h5py \
+    pyarrow \
     matplotlib \
-    numpy \
+    tensorflow \
+    'setuptools>=41.0.0' \
+    'numpy>=1.16.0,<1.19.0' \
     pandas \
     tables \
-    scipy \
+    'scipy==1.4.1' \
+    'six>=1.12.0' \
     sklearn \
     keras \
     tqdm \
-    tensorflow \
     gym \
     baselines \
-    gym_cache
+    gym-cache
 
 COPY environment.sh /.environment.sh
+RUN mkdir /data
+RUN mkdir /save
+RUN mkdir -p /results/plots
+COPY data/* /data/
+COPY results/*.py  /results/
 COPY *.py /
 
 # build info
 RUN echo "Timestamp:" `date --utc` | tee /image-build-info.txt
-
 
 # CMD ["/.environment.sh"]
 CMD ["/bin/bash"]

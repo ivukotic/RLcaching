@@ -19,3 +19,5 @@ Actor solves discrete cache env
 
 ### AC 
 Solves continuous cache env
+
+* make sure GPU is used in dockerimage tensorflow.
