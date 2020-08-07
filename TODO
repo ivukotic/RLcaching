@@ -14,10 +14,9 @@ ENVIRONMENT memorizes last decision concerning file and cleans based on that. Fo
 
 ### DDQN 
 Actor solves discrete cache env
-* currently always returns 0
+* do we need episodes? The only use could be in initial training.
+* Why replays at all? Simply tune up learning rate?
 * no need to memorize next_state and done
 
 ### AC 
 Solves continuous cache env
-
-* make sure GPU is used in dockerimage tensorflow.

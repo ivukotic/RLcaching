@@ -3,7 +3,7 @@ import gym
 import numpy as np
 import pandas as pd
 from collections import deque
-from keras.models import Sequential
+from keras.models import Sequential, load_model
 from keras.layers import Dense
 from keras.optimizers import Adam
 from keras import backend as K
@@ -79,7 +79,7 @@ class DQNAgent:
             self.epsilon *= self.epsilon_decay
 
     def load(self, name):
-        self.model.load_model(name)
+        self.model = keras.models.load_model(name)
 
     def save(self, name):
         self.model.save(name)
@@ -91,13 +91,13 @@ env.set_actor_name('DDQN')
 state_size = env.observation_space.shape[0]
 action_size = env.action_space.n
 agent = DQNAgent(state_size, action_size)
-# agent.load("./save/cache-ddqn.h5")
+# agent.load("./save/cache-ddqn_" + name)
 EPISODES = 1
 replay_batch_size = 64
 updata_steps = 128
 
 accesses = 20000
-accesses = 1000000
+# accesses = 1000000
 # accesses = 3090162
 
 
