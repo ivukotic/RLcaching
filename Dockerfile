@@ -66,10 +66,11 @@ RUN pip3 --no-cache-dir install \
     'six>=1.12.0' \
     sklearn \
     keras \
+    xgboost \
     tqdm \
     gym \
     baselines \
-    gym-cache
+    'gym-cache>=1.0.3'
 
 COPY environment.sh /.environment.sh
 RUN mkdir /data

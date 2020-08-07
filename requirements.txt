@@ -1,3 +1,4 @@
 gym-cache
 pandas
 tqdm
+xgboost
