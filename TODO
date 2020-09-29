@@ -11,6 +11,9 @@ ENVIRONMENT memorizes last decision concerning file and cleans based on that. Fo
 
 ### LRU actor
 
+### XGBoost actor
+* test different learning windows
+* plot cache hit rates etc.
 
 ### DDQN 
 Actor solves discrete cache env
